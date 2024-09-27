@@ -10,7 +10,7 @@ const cors = require('cors');
 
 
 const app=express();
-
+app.use(cors({ origin: '*' }));
 connectDB().then(()=>{
    
 app.listen(8080,()=>{
@@ -18,7 +18,7 @@ app.listen(8080,()=>{
 })
 })
 app.use(express.json());
-app.use(cors());
+
 app.use(menuroute);
 app.use(movroute);
 app.use(bookroute);
