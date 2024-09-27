@@ -10,7 +10,11 @@ const cors = require('cors');
 
 
 const app=express();
-app.use(cors({ origin: '*' }));
+app.use(cors({
+   origin: '*', // Allow all origins
+   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow specific HTTP methods
+}));
+
 connectDB().then(()=>{
    
 app.listen(8080,()=>{
