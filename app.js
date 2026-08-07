@@ -1,40 +1,35 @@
 require("dotenv").config();
-const express=require("express");
-const recipieRoute=require("./Routes/reciperoute.js");
-const menuroute=require("./Routes/menutable.js");
-const movroute=require("./Routes/movieslist.js");
-const bookroute=require("./Routes/booklist.js");
-const userRoute = require("./Routes/userroute"); // Import user routes
-const{connectDB,getDb}=require("./database.js");
-const cors = require('cors');
 
+const express = require("express");
+const cors = require("cors");
 
+const recipieRoute = require("./Routes/reciperoute.js");
+const menuroute = require("./Routes/menutable.js");
+const movroute = require("./Routes/movieslist.js");
+const bookroute = require("./Routes/booklist.js");
+const userRoute = require("./Routes/userroute");
 
-const app=express();
-console.log(process.env.JWT_SECRET);
-app.use(cors({ origin: '*' }));
+const { connectDB } = require("./database.js");
 
-connectDB().then(()=>{
-   
-app.listen(8080,()=>{
-   console.log(" server started...");
-})
-})
+const app = express();
+
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
+// Routes
 app.use(menuroute);
 app.use(movroute);
 app.use(bookroute);
-
-
-// create new user to our application
-
 app.use(userRoute);
 
-// insert recipes and save it into corresponding user
+// Connect database
+connectDB()
+    .then(() => {
+        console.log("Database connected");
+    })
+    .catch((err) => {
+        console.error("Database connection failed:", err);
+    });
 
-
-   
-
-
-
+// IMPORTANT FOR VERCEL
+module.exports = app;
