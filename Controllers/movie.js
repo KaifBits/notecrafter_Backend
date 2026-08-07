@@ -11,7 +11,7 @@ const { ObjectId } = require('mongodb');
             try{
             
             const arr=[];
-            const user=req.params.username;
+            const user=req.user.username;
             console.log( user);
             const p=await getDb().collection("movieslist").insertOne(req.body);
             const id= p.insertedId;
@@ -38,7 +38,7 @@ const { ObjectId } = require('mongodb');
             
                 try{
                 const arr=[]
-                 const name=req.params.username;
+                 const name=req.user.username;
                  const userdata=await getDb().collection("user").findOne({username:name});
                  console.log(userdata)
                  if(userdata){

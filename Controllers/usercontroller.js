@@ -42,7 +42,14 @@ loginUser = async (req, res) => {
         }
 
         // Generate a token
-        const token = jwt.sign({ userId: user._id }, 'your_jwt_secret', { expiresIn: '1h' });
+const token = jwt.sign(
+    { 
+        userId: user._id,
+        username: user.username
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: '1h' }
+);
         res.json({ token });
     } catch (error) {
         console.error(error);

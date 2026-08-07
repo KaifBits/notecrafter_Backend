@@ -1,3 +1,10 @@
+const dns = require("dns");
+
+dns.setServers([
+  "8.8.8.8",
+  "8.8.4.4"
+]);
+
 const {MongoClient}=require("mongodb");
 const url="mongodb+srv://chuchu992233:rahaman%407890@cluster0.mj0eo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 const mongo=new MongoClient(url);

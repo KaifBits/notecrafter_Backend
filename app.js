@@ -1,5 +1,6 @@
+require("dotenv").config();
 const express=require("express");
-
+const recipieRoute=require("./Routes/reciperoute.js");
 const menuroute=require("./Routes/menutable.js");
 const movroute=require("./Routes/movieslist.js");
 const bookroute=require("./Routes/booklist.js");
@@ -10,6 +11,7 @@ const cors = require('cors');
 
 
 const app=express();
+console.log(process.env.JWT_SECRET);
 app.use(cors({ origin: '*' }));
 
 connectDB().then(()=>{
@@ -30,37 +32,7 @@ app.use(bookroute);
 app.use(userRoute);
 
 // insert recipes and save it into corresponding user
-app.post("/create/:username",(req,res)=>{
 
-async function create(req,res){
-   const data=req.body;
-  try{
-   console.log(data)
-   const p=await getDb().collection("recipie").insertOne(data);
-   console.log(p);
-   const id= p.insertedId;
-   
-   const user=req.params.username;
-   console.log(typeof user);
-   const ok=await getDb().collection("user").updateOne({username:user},{$push:{recipie:id}})
-
-
-   console.log("recipie inserted");
-   res.status(200).send("recipie inserted");
-  }
-  catch(err){
-
-   console.log(err);
-   res.status(404).send("recipie not inserted");
-  }
-
-}
-create(req,res);
-
-
-
-}
-)
 
    
 

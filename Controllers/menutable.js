@@ -4,17 +4,22 @@ const { ObjectId } = require('mongodb');
 
 
 
-    
+    //first find userdetails by username
+    // then search related receive menu array of that user
 
             async function menuget(req,res){
             
             try{
             
             const arr=[];
-            const user=req.params.username;
+           const id = req.user.userId;
             console.log(typeof user);
-            const da=await getDb().collection("user").findOne({username:user});
-            const data=da.recipie;
+const currentUser = await getDb()
+    .collection("user")
+    .findOne({
+        _id: new ObjectId(id)
+    });
+                const data= currentUser.recipie;
             console.log(data);
             for(let i=0;i<data.length;i++){
                 
@@ -44,6 +49,7 @@ const { ObjectId } = require('mongodb');
             }
             
             }
+            //all details of a particular recipie
             async function getbyid(req,res){
             
                 try{
